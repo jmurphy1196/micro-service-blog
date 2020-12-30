@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts-client
+  template:
+    metadata:
+      labels:
+        app: posts-client
+    spec:
+      containers:
+        - name: posts-client
+          image: jason1196/posts-client:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-client-clusterip-serv
+spec:
+  selector:
+    app: posts-client
+  ports:
+    - name: posts-client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
